@@ -1,0 +1,9 @@
+CS_Amp
+
+C1 VOUT 0 C value={CL}
+M1 VOUT VIN 0 0 M cgs={cgs} cgb={cgb} cdg={cdg} cdb={cdb} csb={csb} gm={gm} gb={gb} go={1/ro}
+R1 VDD VOUT R value={RD}
+V1 VDD 0 V value={Vds} dc={Vds}
+V2 VIN 0 V value={Vgs} dc={Vgs}
+
+.end

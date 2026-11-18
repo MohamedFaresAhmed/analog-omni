@@ -1,0 +1,4 @@
+# Reference data is stored byte for byte: tests/fixtures/legacy/index.csv
+# records the size and SHA-256 of each fixture file, and the test checks them.
+tests/fixtures/** -text
+examples/netlists/** -text
