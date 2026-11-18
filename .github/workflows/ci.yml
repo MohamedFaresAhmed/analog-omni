@@ -1,0 +1,49 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: pytest (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install the package with its test extra (editable)
+        run: python -m pip install --disable-pip-version-check -e ".[test]"
+      - name: Run pytest
+        run: python -m pytest -ra
+
+  guard:
+    name: private-name guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      # The names come only from the repository secret. If the secret is
+      # missing or empty, the guard exits 2 and the job fails; it never skips.
+      # Hits are reported by position in the list, never by name.
+      - name: Check every file for private model names
+        env:
+          OMNI_PRIVATE_NAMES: ${{ secrets.OMNI_PRIVATE_NAMES }}
+        run: python -I tools/check_private_names.py

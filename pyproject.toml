@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "analog-omni"
+version = "0.0.1"
+description = "Open-source analog IC sizing and insight tool: gm/ID sizing, small-signal analysis and simulator verification."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["numpy", "pytest"]
+
+[project.urls]
+Repository = "https://github.com/MohamedFaresAhmed/analog-omni"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/analog_omni"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
